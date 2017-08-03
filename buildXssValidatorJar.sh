@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # -----------------------------------------------------------------------------
 # buildXssValidatorJar.sh
 #
@@ -6,12 +6,18 @@
 #
 # Usage: bash buildXssValidatorJar.sh
 #
-# Jayson Grace, jayson.e.grace@gmail.com, 9/5/2016
+# Author: Jayson Grace, jayson.e.grace@gmail.com, 9/5/2016
 #
-# Last update 9/5/2016 by Jayson Grace, jayson.e.grace@gmail.com
+# Last update 8/3/2017 by Jayson Grace, jayson.e.grace@gmail.com
 # -----------------------------------------------------------------------------
-apt-get update
-apt-get install -y ant phantomjs
+if [[ `uname` != 'Darwin' ]]; then
+  os=`cat /etc/os-release | perl -n -e'while(/^ID=(.*)/g) {print "$1\n"}'`
+  if [[ $os == 'debian' ]] || [[ $os == 'kali' ]] || [[ $os == 'ubuntu' ]]; then
+    apt-get update
+    apt-get install -y ant phantomjs
+  fi
+fi
+
 cd /opt
 git clone https://github.com/l50/xssValidator.git
 cd xssValidator
